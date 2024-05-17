@@ -6,8 +6,8 @@ use encoding_rs::EUC_KR;
 
 fn run() -> Result<(), Box<dyn Error>> {
     // 입력 파일과 출력 파일 경로를 설정합니다.
-    let input_file = "src/mart_key_02_2023.txt";
-    let output_file = "src/output.csv";
+    let input_file = "src/mart_key_01_2023.txt";
+    let output_file = "src/output1.csv";
 
     // 출력 파일이 존재하지 않으면 생성합니다.
     let mut output_file_handle = OpenOptions::new()
@@ -15,7 +15,6 @@ fn run() -> Result<(), Box<dyn Error>> {
         .create(true)
         .truncate(true)
         .open(output_file)?;
-
 
     // 입력 파일을 엽니다.
     let mut file = File::open(input_file)?;
