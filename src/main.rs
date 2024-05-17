@@ -38,6 +38,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     ])?;
 
     // 입력 파일의 각 줄을 읽고 처리합니다.
+    let mut row_count = 0;
     for line in reader.lines() {
         let line = line?;
         // 마지막 '|' 문자를 제거합니다.
@@ -46,11 +47,13 @@ fn run() -> Result<(), Box<dyn Error>> {
         let fields: Vec<&str> = line.split('|').collect();
         // CSV 파일에 행을 작성합니다.
         wtr.write_record(&fields)?;
+        row_count += 1;
     }
 
     // CSV 파일을 플러시하여 완료합니다.
     wtr.flush()?;
     println!("TXT 파일이 CSV 파일로 변환되었습니다: {}", output_file);
+    println!("총 {}개의 행이 처리되었습니다.", row_count);
 
     Ok(())
 }
