@@ -6,7 +6,7 @@ use encoding_rs::EUC_KR;
 
 fn run() -> Result<(), Box<dyn Error>> {
     // 입력 파일과 출력 파일 경로를 설정합니다.
-    let input_file = "src/mart_key_03_2023.txt";
+    let input_file = "src/mart_djy_03.txt";
     let output_file = "src/output3.csv";
 
     // 용도별 해더
@@ -34,6 +34,8 @@ fn run() -> Result<(), Box<dyn Error>> {
         45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63, 64, 65,
         74, 75, 76
     ];
+
+    //let filter_index = vec![];
 
     // 출력 파일이 존재하지 않으면 생성합니다.
     let mut output_file_handle = OpenOptions::new()
