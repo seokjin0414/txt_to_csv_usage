@@ -6,9 +6,24 @@ use encoding_rs::EUC_KR;
 
 fn run() -> Result<(), Box<dyn Error>> {
     // 입력 파일과 출력 파일 경로를 설정합니다.
-    let input_file = "src/mart_key_02_2023.txt";
-    let output_file = "src/output2.csv";
-
+    let input_file = "src/mart_key_03_2023.txt";
+    let output_file = "src/output3.csv";
+    let header_energy =
+        [
+        "date", "deaji", "doro", "sigungu_cd", "bjdong_cd", "san", "bun",
+        "ji", "new_add", "new_add_1", "new_add_2", "new_add_3", "new_add_4", "energy_use",
+        ];
+    let header_building_info=
+        [
+            "deajaing_pk", "deaji", "doro", "building_name", "sigungu_cd", "bjdong_cd", "san",
+            "bun", "ji", "land_area", "building_area", "building_coverage_ratio", "total_floor_area",
+            "total_floor_area_by_floor_area_ratio", "floor_area_ratio", "main_structure_information",
+            "main_structure_name", "main_purpose_information", "main_purpose_name", "household",
+            "family_count", "height", "floor_ground_count", "floor_underground_count",
+            "permission_use_date", "unit", "energy_efficiency_grade", "energy_saving_rate",
+            "epi_score", "eco_building_grade", "eco_building_score", "intelligent_building_grade",
+            "intelligent_building_score",
+        ];
     // 출력 파일이 존재하지 않으면 생성합니다.
     let mut output_file_handle = OpenOptions::new()
         .write(true)
@@ -32,10 +47,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     let mut wtr = Writer::from_path(output_file)?;
 
     // CSV 파일에 헤더를 작성합니다.
-    wtr.write_record(&[
-        "date", "deaji", "doro", "sigungu_cd", "bjdong_cd", "san", "bun", "ji",
-        "new_add", "new_add_1", "new_add_2", "new_add_3", "new_add_4", "energy_use"
-    ])?;
+    wtr.write_record(header_building_info)?;
 
     // 입력 파일의 각 줄을 읽고 처리합니다.
     let mut row_count = 0;
