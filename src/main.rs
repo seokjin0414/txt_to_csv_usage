@@ -8,11 +8,14 @@ fn run() -> Result<(), Box<dyn Error>> {
     // 입력 파일과 출력 파일 경로를 설정합니다.
     let input_file = "src/mart_key_03_2023.txt";
     let output_file = "src/output3.csv";
+
+    // 용도별 해더
     let header_energy =
         [
         "date", "deaji", "doro", "sigungu_cd", "bjdong_cd", "san", "bun",
         "ji", "new_add", "new_add_1", "new_add_2", "new_add_3", "new_add_4", "energy_use",
         ];
+
     let header_building_info=
         [
             "deajaing_pk", "deaji", "doro", "building_name", "sigungu_cd", "bjdong_cd", "san",
@@ -24,6 +27,14 @@ fn run() -> Result<(), Box<dyn Error>> {
             "epi_score", "eco_building_grade", "eco_building_score", "intelligent_building_grade",
             "intelligent_building_score",
         ];
+
+    // 필터링할 인덱스 정의
+    let filter_index = vec![
+        1, 2, 3, 4, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 33, 36, 37, 38, 39,
+        45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 61, 62, 63, 64, 65,
+        74, 75, 76
+    ];
+
     // 출력 파일이 존재하지 않으면 생성합니다.
     let mut output_file_handle = OpenOptions::new()
         .write(true)
@@ -55,8 +66,16 @@ fn run() -> Result<(), Box<dyn Error>> {
         let line = line?;
         // 마지막 '|' 문자를 제거합니다.
         let line = line.trim_end_matches('|');
+
         // '|' 문자를 기준으로 문자열을 분리합니다.
         let fields: Vec<&str> = line.split('|').collect();
+
+        let fields: Vec<&str> = fields.iter()
+            .enumerate()
+            .filter(|&(index, _)| !filter_index.contains(&index))
+            .map(|(_, &field)| field)
+            .collect();
+
         // CSV 파일에 행을 작성합니다.
         wtr.write_record(&fields)?;
         row_count += 1;
