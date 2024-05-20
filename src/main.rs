@@ -70,14 +70,18 @@ fn run() -> Result<(), Box<dyn Error>> {
         // '|' 문자를 기준으로 문자열을 분리합니다.
         let fields: Vec<&str> = line.split('|').collect();
 
-        let fields: Vec<&str> = fields.iter()
-            .enumerate()
-            .filter(|&(index, _)| !filter_index.contains(&index))
-            .map(|(_, &field)| field)
-            .collect();
+        let filtered_fields: Vec<&str> = if filter_index.is_empty() {
+            fields.clone()
+        } else {
+            fields.iter()
+                .enumerate()
+                .filter(|&(index, _)| !filter_index.contains(&index))
+                .map(|(_, &field)| field)
+                .collect()
+        };
 
         // CSV 파일에 행을 작성합니다.
-        wtr.write_record(&fields)?;
+        wtr.write_record(&filtered_fields)?;
         row_count += 1;
     }
 
